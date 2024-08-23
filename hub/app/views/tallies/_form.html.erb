@@ -1,0 +1,14 @@
+<%= form_with model: tally do |form|  %>
+  <div>
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+  <div>
+    <%= form.label :input %>
+    <%= form.collection_select input_id, Input.all, :id, :name || :id, include_blank: true %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

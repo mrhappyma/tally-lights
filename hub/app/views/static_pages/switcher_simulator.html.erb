@@ -1,0 +1,51 @@
+<script type=module>
+    (function() {
+        const setStatus = async (inputId, state) => {
+            await fetch(`/inputs/${inputId}/set_status?state=${state}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
+                },
+                body: JSON.stringify({ state })
+            });
+            window.location.reload();
+        };
+
+        // Attach event listeners to buttons
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('click', () => {
+                const inputId = button.dataset.inputId;
+                const state = button.dataset.state;
+                setStatus(inputId, state);
+            });
+        });
+
+
+    })();
+</script>
+
+<h1>switcher simulator (super fun)</h1>
+
+<% @inputs.each do |input| %>
+  <%= input.name %> - #<%= input.id %><br>
+  <button data-input-id="<%= input.id %>" data-state="live"
+          style="background-color: <%= input.status == 'live' ? 'green' : '#ccc' %>;">
+    Live
+  </button>
+  <button data-input-id="<%= input.id %>" data-state="preview"
+          style="background-color: <%= input.status == 'preview' ? 'blue' : '#ccc' %>;">
+    Preview
+  </button>
+  <button data-input-id="<%= input.id %>" data-state="dead"
+          style="background-color: <%= input.status == 'dead' ? 'red' : '#ccc' %>;">
+    Dead
+  </button>
+<% end %>
+
+
+<!--<br>-->
+<!--<br>-->
+<!--<audio controls>-->
+<!--  <source src="penis.mp3" type="audio/mpeg">-->
+<!--</audio>-->

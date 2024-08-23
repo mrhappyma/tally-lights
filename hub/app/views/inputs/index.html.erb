@@ -1,0 +1,30 @@
+<h1>inputs</h1>
+
+<%= link_to 'new input', new_input_url %>
+
+<table>
+  <thead>
+  <th>id</th>
+  <th>name</th>
+  <th>status</th>
+  <th>tallies</th>
+  <th>actions</th>
+  </thead>
+  <tbody>
+  <% @inputs.each do |input| %>
+    <tr>
+      <td><%= input.id %></td>
+      <td><%= input.name %></td>
+      <td><%= input.status %></td>
+      <td><%= input.tallies.pluck(:name || :id).join(',') %></td>
+      <td>
+        <%= link_to 'edit', edit_input_url(input) %><br>
+        <%= link_to 'delete', input_url(input), data: {
+          turbo_method: :delete,
+          turbo_confirm: 'are you sure?'
+        } %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

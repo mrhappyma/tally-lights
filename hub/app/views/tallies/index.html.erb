@@ -1,0 +1,32 @@
+<h1>tallies</h1>
+
+<%= link_to 'new tally', new_tally_url %>
+
+<table>
+  <thead>
+  <th>id</th>
+  <th>name</th>
+  <th>on</th>
+  <th>status</th>
+  <th>actions</th>
+  </thead>
+  <tbody>
+  <% @tallies.each do |tally| %>
+    <tr>
+      <td><%=tally.id %></td>
+      <td><%=tally.name %></td>
+      <td><%=link_to "#{tally.on}", "/tallies/#{tally.id}/switch", data: {
+        turbo_method: :post
+      } %></td>
+      <td><%= @statuses[tally.id] ? 'connected' : 'offline' %></td>
+      <td>
+        <%= link_to 'edit', edit_tally_url(tally) %><br>
+        <%= link_to 'delete', tally_url(tally), data: {
+          turbo_method: :delete,
+          turbo_confirm: 'are you sure?'
+        } %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
